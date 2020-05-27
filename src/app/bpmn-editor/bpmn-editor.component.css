@@ -1,0 +1,27 @@
+.diagram-container {
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+}
+
+a.copy-right {
+    width: 100px;
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+}
+
+.disabled-btn {
+    opacity: 0.4;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+ul.create-diagram, ul.download-digran {
+    background-color: #fafafa;
+}
+
+.view-switch-icons {
+    top: 75px;
+}

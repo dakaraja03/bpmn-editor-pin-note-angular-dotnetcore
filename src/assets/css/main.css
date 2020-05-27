@@ -1,0 +1,424 @@
+ body {
+     font-family: 'Poppins', sans-serif;
+     font-weight: 400;
+ }
+
+ html,
+ body,
+ #canvas {
+     height: 100%;
+     padding: 0;
+     margin: 0;
+ }
+
+ a.bjs-powered-by {
+     display: none;
+ }
+
+ a.copy-right {
+     width: 100px;
+     position: absolute;
+     right: 20px;
+     bottom: 20px;
+ }
+
+ .diagram-note {
+     background-color: rgba(66, 180, 21, 0.7);
+     color: White;
+     border-radius: 5px;
+     font-family: Arial;
+     font-size: 12px;
+     padding: 5px;
+     min-height: 16px;
+     width: 50px;
+     text-align: center;
+ }
+
+ .needs-discussion:not(.djs-connection) .djs-visual> :nth-child(1) {
+     stroke: rgba(66, 180, 21, 0.7) !important;
+ }
+
+ .floating-action-buttons {
+     position: fixed;
+     bottom: 20px;
+     left: 20px;
+     display: flex;
+ }
+
+ .floating-action-buttons ul {
+     margin: 0;
+     padding: 10px;
+     list-style: none;
+     display: flex;
+     align-items: center;
+     border: 1px solid #ddd;
+ }
+
+ .floating-action-buttons ul.create-diagram {
+     margin-right: 25px;
+ }
+
+ .floating-action-buttons ul li {
+     display: flex;
+     align-items: center;
+ }
+
+ .floating-action-buttons ul li {
+     position: relative;
+     border-right: 1px solid #ddd;
+     margin-right: 15px;
+     padding-right: 15px;
+ }
+
+ .floating-action-buttons ul li:last-child {
+     margin: 0;
+     padding: 0;
+     border: 0;
+ }
+
+ .floating-action-buttons ul li.import-bpmn input {
+     position: absolute;
+     left: 0;
+     top: 0;
+     width: 100%;
+     height: 100%;
+     opacity: 0;
+     cursor: pointer;
+ }
+
+ .floating-action-buttons ul li {
+     cursor: pointer;
+ }
+
+ .floating-action-buttons ul li i {
+     font-size: 22px;
+ }
+
+ .overlay-card-note,
+ .overlay-card-note-data {
+     border-radius: 0 !important;
+     border: 0 !important;
+     background: #03A9F4 !important;
+     position: relative !important;
+     transform-origin: top;
+     transform: scale3d(1, 1, 1);
+     transition: all 0.3s ease-in-out;
+ }
+
+ .overlay-card-note-data {
+     background: #b1cbd6 !important;
+ }
+
+ .overlay-card-note i,
+ .overlay-card-note-data i {
+     position: absolute;
+     right: 5px;
+     top: 5px;
+     color: #fff;
+     cursor: pointer;
+ }
+
+ .overlay-card-note .card-body label {
+     padding: 5px 0 0 12px;
+     margin: 0;
+     font-size: 15px;
+ }
+
+ .overlay-card-note-data .card-body label {
+     color: #595959;
+     padding: 0;
+     font-weight: 500;
+     text-transform: uppercase;
+     font-size: 15px;
+     margin: 0;
+ }
+
+ .overlay-card-note .card-body input,
+ .overlay-card-note-data .card-body textarea,
+ .overlay-card-note-data .card-body input {
+     background: no-repeat;
+     border: 0;
+     border-bottom: 1px solid #eee;
+     border-radius: 0;
+     padding: 0;
+     color: #fff;
+     font-size: 14px;
+     font-weight: 300;
+ }
+
+ .overlay-card-note-data .card-body textarea,
+ .overlay-card-note-data .card-body input {
+     color: #181818;
+ }
+
+ .overlay-card-note-data .card-body textarea {
+     height: 110px;
+ }
+
+ .overlay-card-note-data .card-body.disable-field textarea {
+     border: 0;
+     resize: none;
+     height: auto;
+ }
+
+ .overlay-card-note-data .card-body.disable-field input {
+     font-weight: 700;
+     border: 0;
+ }
+
+ .overlay-card-note-data .card-body.disable-field .url-field input {
+     text-decoration: underline;
+ }
+
+ .overlay-card-note .card-body input:focus,
+ .overlay-card-note-data .card-body textarea:focus,
+ .overlay-card-note-data .card-body input:focus {
+     outline: none;
+     box-shadow: none;
+ }
+
+ .overlay-card-note .card-body.disable-field {
+     position: relative;
+     padding-left: 15px;
+     margin: 0;
+ }
+
+ .overlay-card-note .card-body.disable-field::before {
+     content: "";
+     width: 8px;
+     height: 8px;
+     background: #0f2189;
+     border-radius: 100%;
+     position: absolute;
+     left: 0;
+     top: 50%;
+     transform: translate3d(0, -50%, 0);
+ }
+
+ .overlay-add-note {
+     background: #1310cf !important;
+     color: #fff !important;
+     font-size: 10px !important;
+     padding: 3px 10px !important;
+     width: 90px !important;
+     border: 0 !important;
+ }
+
+ .overlay-add-note:focus {
+     border: 0;
+     outline: none;
+     box-shadow: none;
+ }
+
+ .overlay-card-note .card-body .disable-field input {
+     border-bottom: 0;
+     font-weight: 700;
+     cursor: pointer;
+     color: #0f2189;
+     text-decoration: underline;
+ }
+
+ .overlay-pin {
+     background: #e23945 !important;
+     color: #fff !important;
+     font-size: 10px !important;
+     padding: 3px 10px !important;
+     width: 80px !important;
+     border: 0 !important;
+ }
+
+ .overlay-pin:focus {
+     border: 0;
+     outline: none;
+     box-shadow: none;
+ }
+
+ .overlay-pin i {
+     display: none;
+ }
+
+ .djs-overlay-pin.show-pin .overlay-pin {
+     background: none;
+     font-size: 18px;
+ }
+
+ .djs-overlay-pin.show-pin .overlay-pin span {
+     display: none;
+ }
+
+ .djs-overlay-pin.show-pin .overlay-pin i {
+     display: block;
+     background: none;
+     color: #e23945;
+     cursor: pointer;
+     transform: rotate(45deg);
+ }
+
+ .djs-overlay-pin {
+     /* opacity: 0; */
+     display: none;
+     transition: all 0.3s ease-in-out;
+     z-index: -99999;
+ }
+
+ .djs-overlay-add-note {
+     /* opacity: 0; */
+     display: none;
+     transition: all 0.3s ease-in-out;
+     z-index: -99999;
+ }
+
+ .djs-overlays.selected .djs-overlay-pin {
+     /* opacity: 1; */
+     display: block;
+     transition: all 0.3s ease-in-out;
+     z-index: 99;
+ }
+
+ .djs-overlays.selected .djs-overlay-add-note {
+     /* opacity: 1; */
+     display: block;
+     transition: all 0.3s ease-in-out;
+     z-index: 99;
+ }
+
+ .djs-overlay-pin.show-pin {
+     opacity: 1;
+     transition: all 0.3s ease-in-out;
+     z-index: 99;
+ }
+
+ .djs-overlays.show-overlay-note .djs-overlay-note,
+ .djs-overlays.show-overlay-add-note .djs-overlay-add-note-data {
+     display: block !important;
+ }
+
+ .overlay-card-note .card-body input::-webkit-input-placeholder,
+ .overlay-card-note-data .card-body textarea::-webkit-input-placeholder,
+ .overlay-card-note-data .card-body input::-webkit-input-placeholder {
+     /* Edge */
+     color: #fff;
+ }
+
+ .overlay-card-note .card-body input:-ms-input-placeholder,
+ .overlay-card-note-data .card-body textarea:-ms-input-placeholder,
+ .overlay-card-note-data .card-body input:-ms-input-placeholder {
+     /* Internet Explorer 10-11 */
+     color: #fff;
+ }
+
+ .overlay-card-note .card-body input::placeholder,
+ .overlay-card-note-data .card-body textarea::placeholder,
+ .overlay-card-note-data .card-body input::placeholder {
+     color: #fff;
+ }
+
+ .overlay-card-note .card-body button,
+ .overlay-card-note-data .card-body button {
+     width: 100px;
+     font-size: 14px;
+     text-transform: uppercase;
+     background: #673AB7;
+     border: 0;
+     border-radius: 0;
+ }
+
+ .overlay-card-note .card-body button:hover,
+ .overlay-card-note-data .card-body button:hover {
+     background: rgb(49, 19, 100);
+ }
+
+ .overlay-card-note .card-body button:focus,
+ .overlay-card-note-data .card-body button:focus {
+     outline: none;
+     border: 0;
+     box-shadow: none;
+ }
+
+ .view-switch-icons {
+     position: absolute;
+     right: 20px;
+     top: 20px;
+ }
+
+ .view-switch-icons ul {
+     list-style: none;
+     margin: 0;
+     padding: 0;
+     display: flex;
+ }
+
+ .view-switch-icons ul li {
+     margin-right: 20px;
+ }
+
+ .view-switch-icons ul li:last-child {
+     margin: 0;
+ }
+
+ .view-switch-icons ul li button {
+     text-transform: uppercase;
+     border-radius: 0;
+     padding: 5px 15px;
+     font-size: 14px;
+     border: 0;
+ }
+
+ .view-switch-icons ul li.active button,
+ .view-switch-icons ul li button:hover {
+     background: purple;
+ }
+
+ /* start - addPin Modal styles */
+ .modal-body {
+     padding: 0;
+ }
+
+ .padding-30 {
+     padding: 30px;
+ }
+
+ .type-of-linkages {
+    border-left: 1px dashed #ccc;
+    border-right: 1px dashed #ccc;
+ }
+
+ .modal-content {
+    background-color: #F2F3F7;
+ }
+
+ ul.nav.nav-pills {
+    background-color: #fff;
+    border-radius: 23px;
+    display: flex;
+    align-items: center;
+ }
+
+ .nav-pills .nav-link.active {
+    background-color: #E4645F !important;
+    border-radius: 23px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+ }
+ textarea {
+    resize: none;
+    height: 210px !important;
+ }
+ .btn.btn-main {
+    margin-right: 28px;
+    border-radius: 50px;
+    /* height: 35px; */
+    padding: 6px 10px;
+    font-size: 16px;
+    color: #fff;
+    text-transform: uppercase;
+    white-space: normal;
+    word-break: break-word;
+    background: linear-gradient(132deg, #E4645F 0%, #E3723C 100%);
+ }
+
+ .hidden {
+     display: none !important;
+ }
+ /* end - addPin Modal styles */

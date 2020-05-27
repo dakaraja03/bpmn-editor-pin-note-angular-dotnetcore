@@ -1,0 +1,40 @@
+<h2 *ngIf="initialDiagram === ''" style="color: red;">nothing to load</h2>
+<div #ref class="diagram-container"></div>
+
+<div class="view-switch-icons">
+    <ul class="view-buttons">
+        <li>
+            <button routerLink="/bpmn-editor" class="btn btn-primary" id="viewSwitcher">Admin View</button>
+        </li>
+        <li class="active">
+            <button routerLink="/bpmn-editor-readonly" class="btn btn-primary">Enduser View</button>
+        </li>
+    </ul>
+</div>
+
+<div class="floating-action-buttons">
+    <ul class="create-diagram">
+        <li data-toggle="tooltip" data-placement="top" title="Open an Existing BPMN Diagram" class="import-bpmn">
+            <input (change)="openExistingDiagramHandler($event)" id="importBPMN" type="file" accept=".xml, .bpmn">
+            <i class="fas fa-folder-plus"></i>
+        </li>
+        <li (click)="createNewDiagramHandler()" class="disabled-btn" id="importEmptyDiagram" data-toggle="tooltip" data-placement="top" title="Open a Starter BPMN Diagram">
+            <i class="fas fa-plus-circle"></i>
+        </li>
+        <li data-toggle="tooltip" class="disabled-btn" data-placement="top" title="Try our predefined diagrams">
+            <i data-toggle="modal" data-target="#insertSampleModal" class="fas fa-lightbulb"></i>
+        </li>
+    </ul>
+    <ul class="download-diagram">
+        <li (click)="downloadDiagramHandler()" class="disabled-btn" data-toggle="tooltip" data-placement="top" title="Download as BPMN" id="downloadBPMN">
+            <i class="fas fa-download"></i>
+        </li>
+        <!-- <li>
+            <i class="fas fa-image"></i>
+        </li> -->
+    </ul>
+</div>
+
+<a href="https://www.gieom.com/" target="_blank" class="copy-right">
+    <img src="https://www.gieom.com/wp-content/themes/gieom/images/logo.png" class="img-fluid" alt="">
+</a>
