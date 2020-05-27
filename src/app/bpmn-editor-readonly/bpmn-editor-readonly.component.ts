@@ -160,6 +160,87 @@ export class BpmnEditorReadonlyComponent implements OnInit, OnDestroy, AfterCont
     $(document).on('click', '#closeOverlayNoteData', function () {
       $(this).parent().parent().parent().removeClass('show-overlay-add-note');
     });
+
+    $(document).on('click', '.savePinDetails', function() {
+      debugger;
+      var item = $(this).parent().find('input');
+      var values = [];
+      $(this).parent().parent().parent().parent().find('.djs-overlay-pin').addClass('show-pin');
+      $(this).prop('disabled', true);
+      for (var i = 0; i < item.length; i++) {
+          if ($(item[i]).val().length > 0) {
+              $(item[i]).prop('disabled', true);
+              $(item[i]).parent().addClass('disable-field');
+              
+              values.push($(item[i]).val());
+              var id = $(item[i]).attr("id");
+              var value = $(item[i]).val();
+
+              // if (selectedElement) {
+              //     addComment(selectedElement, id, value, "pin"); // add Pin details to xml file
+              // }
+          }
+      }
+
+      var shapeId = $(this).parent().parent().parent().parent().attr("data-container-id") ? $(this).parent().parent().parent().parent().attr("data-container-id") : null;
+      var pinData = values.length > 0 ? values.join(";") : null;
+      var data = {
+          ShapeId: shapeId,
+          PinData: pinData,
+          PinType: "Pin",
+      };
+      if (data !== null) {
+          // addPinDetailsToDB(data);
+      }
+
+  });
+
+  var canvas = this.bpmnModeler.get('canvas');
+  $(document).on('click', '.saveNoteDetails', function () {
+      debugger;
+      $(this).parent().addClass('disable-field');
+      $(this).parent().find('input').prop('disabled', true);
+      $(this).parent().find('textarea').prop('disabled', true);
+      $(this).parent().parent().parent().parent().find('.djs-overlay-add-note').hide();
+      canvas.addMarker($(this).parent().parent().parent().parent().attr('data-container-id'), 'needs-discussion');
+      $(this).prop('disabled', true);
+
+      var values = [];
+      var item = $(this).parent().find('input');
+      var textarea = $(this).parent().find('textarea');
+
+      for (var i = 0; i < item.length; i++) {
+          if ($(item[i]).val().length > 0) {
+              values.push({
+                  "id": $(item[i]).attr("id"),
+                  "value": $(item[i]).val(),
+              });
+          }
+      }
+      if(textarea){
+          values.push({
+              "id": textarea.attr("id"),
+              "value": textarea.val(),
+          });
+      }
+
+      // for(var i = 0; i < values.length; i++) {
+      //     if (selectedElement) {
+      //         addComment(selectedElement, values[i]["id"], values[i]["value"], "note"); // add NotePin details to xml file
+      //     }
+      // }
+
+      var shapeId = $(this).parent().parent().parent().parent().attr('data-container-id') ? $(this).parent().parent().parent().parent().attr('data-container-id') : null;
+      var PinData = values.map(val => val["value"]).length > 0 ? values.map(val => val["value"]).join(";") : null;
+      var data = {
+          ShapeId: shapeId,
+          PinData: PinData,
+          PinType: "Note",
+      };
+      if (data !== null) {
+          // addPinDetailsToDB(data);
+      }
+    });
   }
 
   ngOnInit(): void {
