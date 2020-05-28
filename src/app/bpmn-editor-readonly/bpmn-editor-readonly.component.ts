@@ -79,17 +79,45 @@ export class BpmnEditorReadonlyComponent implements OnInit, OnDestroy, AfterCont
         this.bpmnModeler.get('canvas').zoom('fit-viewport');
       }
 
-      var downloadBPMNEle = document.getElementById("downloadBPMN");
-      if (downloadBPMNEle.classList.contains("disabled-btn")) {
-        downloadBPMNEle.classList.remove("disabled-btn");
+      // var downloadBPMNEle = document.getElementById("downloadBPMN");
+      // if (downloadBPMNEle.classList.contains("disabled-btn")) {
+      //   downloadBPMNEle.classList.remove("disabled-btn");
+      // }
+
+      var ulEle = document.getElementsByClassName("download-diagram");
+      var liEle = null;
+
+      if (ulEle.length > 0) {
+        liEle = ulEle[0].children;
+      }
+      if (liEle.length > 0) {
+        for (var i = 0; i < liEle.length; i++) {
+          if (liEle[i].classList.contains("disabled-btn")) {
+            liEle[i].classList.remove("disabled-btn");
+          }
+        }
       }
     });
     
     this.bpmnModeler.on('commandStack.changed', function() {
-      var downloadBPMNEle = document.getElementById("downloadBPMN");
-      if (downloadBPMNEle.classList.contains("disabled-btn")) {
-        downloadBPMNEle.classList.remove("disabled-btn");
-      }
+      // var downloadBPMNEle = document.getElementById("downloadBPMN");
+      // if (downloadBPMNEle.classList.contains("disabled-btn")) {
+      //   downloadBPMNEle.classList.remove("disabled-btn");
+      // }
+
+      // var ulEle = document.getElementsByClassName("download-diagram");
+      // var liEle = null;
+
+      // if (ulEle.length > 0) {
+      //   liEle = ulEle[0].children;
+      // }
+      // if (liEle.length > 0) {
+      //   for (var i = 0; i < liEle.length; i++) {
+      //     if (liEle[i].classList.contains("disabled-btn")) {
+      //       liEle[i].classList.remove("disabled-btn");
+      //     }
+      //   }
+      // }
     });
 
     var canvas = this.bpmnModeler.get('canvas');
@@ -318,6 +346,22 @@ export class BpmnEditorReadonlyComponent implements OnInit, OnDestroy, AfterCont
         pom.dataset.downloadurl = ['text/plain', pom.download, pom.href].join(':');
         pom.draggable = true;
         pom.click();
+    });
+  }
+
+  exportDigramSVG() {
+    this.bpmnModeler.saveSVG(function(err, svg) {
+      if (err) {
+        return console.error('could not save BPMN 2.0 diagram', err);
+      }
+      const filename = 'export-diagram.svg';
+      const pom = document.createElement('a');
+      const blob = new Blob([svg], { type: 'image/svg+xml' });
+      pom.setAttribute('href', window.URL.createObjectURL(blob));
+      pom.setAttribute('download', filename);
+      pom.dataset.downloadurl = ['image/svg+xml', pom.download, pom.href].join(':');
+      pom.draggable = true;
+      pom.click();
     });
   }
 

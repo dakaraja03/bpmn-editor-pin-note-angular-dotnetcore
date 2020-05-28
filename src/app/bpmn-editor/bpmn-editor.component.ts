@@ -48,17 +48,45 @@ export class BpmnEditorComponent implements OnInit, OnDestroy, AfterContentInit 
         this.bpmnModeler.get('canvas').zoom('fit-viewport');
       }
 
-      var downloadBPMNEle = document.getElementById("downloadBPMN");
-      if (downloadBPMNEle.classList.contains("disabled-btn")) {
-        downloadBPMNEle.classList.remove("disabled-btn");
+      // var downloadBPMNEle = document.getElementById("downloadBPMN");
+      // if (downloadBPMNEle.classList.contains("disabled-btn")) {
+      //   downloadBPMNEle.classList.remove("disabled-btn");
+      // }
+
+      var ulEle = document.getElementsByClassName("download-diagram");
+      var liEle = null;
+
+      if (ulEle.length > 0) {
+        liEle = ulEle[0].children;
+      }
+      if (liEle.length > 0) {
+        for (var i = 0; i < liEle.length; i++) {
+          if (liEle[i].classList.contains("disabled-btn")) {
+            liEle[i].classList.remove("disabled-btn");
+          }
+        }
       }
     });
     
     this.bpmnModeler.on('commandStack.changed', function() {
-      var downloadBPMNEle = document.getElementById("downloadBPMN");
-      if (downloadBPMNEle.classList.contains("disabled-btn")) {
-        downloadBPMNEle.classList.remove("disabled-btn");
-      }
+      // var downloadBPMNEle = document.getElementById("downloadBPMN");
+      // if (downloadBPMNEle.classList.contains("disabled-btn")) {
+      //   downloadBPMNEle.classList.remove("disabled-btn");
+      // }
+
+      // var ulEle = document.getElementsByClassName("download-diagram");
+      // var liEle = null;
+
+      // if (ulEle.length > 0) {
+      //   liEle = ulEle[0].children;
+      // }
+      // if (liEle.length > 0) {
+      //   for (var i = 0; i < liEle.length; i++) {
+      //     if (liEle[i].classList.contains("disabled-btn")) {
+      //       liEle[i].classList.remove("disabled-btn");
+      //     }
+      //   }
+      // }
     });
   }
 
@@ -89,6 +117,10 @@ export class BpmnEditorComponent implements OnInit, OnDestroy, AfterContentInit 
 
   downloadDiagramHandler() {
     this.exportDiagram();
+  }
+
+  downloadDiagramasSVGHandler() {
+    this.exportDigramSVG();
   }
 
   openExistingDiagramHandler(event) {
@@ -141,7 +173,7 @@ export class BpmnEditorComponent implements OnInit, OnDestroy, AfterContentInit 
         if (err) {
             return console.error('could not save BPMN 2.0 diagram', err);
         }
-        const filename = 'export-diagram.xml';
+        const filename = 'export-diagram.bpmn';
         const pom = document.createElement('a');
         const blob = new Blob([xml], { type: 'text/plain' });
         pom.setAttribute('href', window.URL.createObjectURL(blob));
@@ -151,4 +183,21 @@ export class BpmnEditorComponent implements OnInit, OnDestroy, AfterContentInit 
         pom.click();
     });
   }
+
+  exportDigramSVG() {
+    this.bpmnModeler.saveSVG(function(err, svg) {
+      if (err) {
+        return console.error('could not save BPMN 2.0 diagram', err);
+      }
+      const filename = 'export-diagram.svg';
+      const pom = document.createElement('a');
+      const blob = new Blob([svg], { type: 'image/svg+xml' });
+      pom.setAttribute('href', window.URL.createObjectURL(blob));
+      pom.setAttribute('download', filename);
+      pom.dataset.downloadurl = ['image/svg+xml', pom.download, pom.href].join(':');
+      pom.draggable = true;
+      pom.click();
+    });
+  }
+
 }
