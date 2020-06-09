@@ -59,7 +59,7 @@ export class BpmnEditorComponent implements OnInit, OnDestroy, AfterContentInit 
       if (ulEle.length > 0) {
         liEle = ulEle[0].children;
       }
-      if (liEle.length > 0) {
+      if (liEle !== null  && liEle.length > 0) {
         for (var i = 0; i < liEle.length; i++) {
           if (liEle[i].classList.contains("disabled-btn")) {
             liEle[i].classList.remove("disabled-btn");
@@ -116,7 +116,12 @@ export class BpmnEditorComponent implements OnInit, OnDestroy, AfterContentInit 
   }
 
   downloadDiagramHandler() {
-    this.exportDiagram();
+    var prompt = window.prompt("Enter name of file, to save", "export-diagram");
+
+    if (prompt !== null || prompt !== "") {
+      var diagramName = prompt;
+      this.exportDiagram(diagramName);
+    }
   }
 
   downloadDiagramasSVGHandler() {
@@ -128,19 +133,22 @@ export class BpmnEditorComponent implements OnInit, OnDestroy, AfterContentInit 
     event.preventDefault();
 
     var files = event.target.files;
-    var file = files[0];
 
-    var reader = new FileReader();
-    
-    reader.onload = evt => {
-      var xml = evt.target["result"];
-      if (xml !== "") {
-        this.initialDiagram = xml;
-        this.openDiagram(xml);
-      }
-    };
+    if (files.length > 0) {
+      var file = files[0];  
 
-    reader.readAsText(file);
+      var reader = new FileReader();
+      
+      reader.onload = evt => {
+        var xml = evt.target["result"];
+        if (xml !== "") {
+          // this.initialDiagram = xml;
+          this.openDiagram(xml);
+        }
+      };
+
+      reader.readAsText(file);
+    }
   }
 
   switchToReadonlyModeHandler() {
@@ -168,12 +176,13 @@ export class BpmnEditorComponent implements OnInit, OnDestroy, AfterContentInit 
     });
   }
 
-  exportDiagram() {
+  exportDiagram(diagramName = "export-diagram") {
     this.bpmnModeler.saveXML({ format: true }, function (err, xml) {
         if (err) {
             return console.error('could not save BPMN 2.0 diagram', err);
         }
-        const filename = 'export-diagram.bpmn';
+        const fileFormat = ".xml";
+        const filename = diagramName + fileFormat;
         const pom = document.createElement('a');
         const blob = new Blob([xml], { type: 'text/plain' });
         pom.setAttribute('href', window.URL.createObjectURL(blob));
